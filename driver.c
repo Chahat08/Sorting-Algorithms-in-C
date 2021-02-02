@@ -2,11 +2,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 typedef int Item;
+#define key(p) (p)
 #define exchange(p, q) {Item t; t=p; p=q; q=t;}
+#define less(p, q) (key(p) < key(q))
+#define compexch(p, q) if(less(q, p)) exchange(p, q)
 
 
-void sort(Item a[], int N)
+void bubble_sort(Item a[], int N)
 {
+	// TO-DO: pass l, r instead of N
+
+	// a simple bubble sort implementation
+	// kinda optimised
+
 	int i, j;
 	bool flag = false;
 
@@ -26,7 +34,60 @@ void sort(Item a[], int N)
 	}
 }
 
+void selection_sort(Item a[], int l, int r)
+{
+	// SELECTION SORT
 
+	/*
+		- selection sort compares the rest of the elements w the first element and exchanges the first element w the smallest available one.
+		- and then the second one with the smallest in the rest of the array.
+		- and so on.
+	*/
+
+	/*
+		Selection sort is so called because in each iteration of the outer loop, the smallest element from the remaining unsorted array is SELECTED
+		to be exchanged with the first element of the unsorted section.
+	*/
+
+	// N-1 exchanges because the last element doesnt need to be exchanged.
+	// Runtime proportional to N^2.
+
+	int i, j, minIndex; // minIndex to hold the index of the smallest item.
+
+	for (i = l; i < r; ++i)
+	{
+		minIndex = i;
+
+		for (j = i + 1; j < r; ++j)
+			if (a[j] < a[minIndex]) 
+				minIndex = j;
+	
+		exchange(a[i], a[minIndex]);
+	}
+
+	// CONS:
+	/*
+		* When making a pass through the array, we still dont know where the next min element might be.
+		* It takes almost the same time to sort an array that is already sorted
+		* or an array which has equal elements
+		* as an unsorted array.	
+	*/
+	// PROS:
+	/*
+		* Works better than most algorithms
+		* when the items are large and the keys are small
+		* In such cases the cost of making comparisons is lesser than the
+		* cost of moving data
+	*/
+
+}
+
+void sort(Item a[], int l, int r)
+{
+	// insertion sort algo comes here
+
+
+}
 
 int main(int argc, char* argv[])
 {
@@ -38,6 +99,8 @@ int main(int argc, char* argv[])
 			a[i] = 1000 * (1.0 * rand() / RAND_MAX);  // greater chance of repetition
 	else // user i/p via stdin
 		while (scanf("%d", &a[N]) == 1) ++N;
+
+	// TO-DO: REFINE USER ENTERED INPUT.
 
 	for (i = 0; i < N; ++i)
 		printf("%d\n", a[i]);
