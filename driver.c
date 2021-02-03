@@ -6,6 +6,7 @@ typedef int Item;
 #define exchange(p, q) {Item t; t=p; p=q; q=t;}
 #define less(p, q) (key(p) < key(q))
 #define compexch(p, q) if(less(q, p)) exchange(p, q)
+// using macros instead of functions so that these can be reused for different data types
 
 
 void bubble_sort(Item a[], int N)
@@ -82,10 +83,36 @@ void selection_sort(Item a[], int l, int r)
 
 }
 
+
 void sort(Item a[], int l, int r)
 {
 	// insertion sort algo comes here
 
+	int i, j;
+
+	// this is the basic non-adaptive insertion sort
+	/*
+	for (i = l + 1; i < r; ++i)
+		for (j = i; j > l; --j)
+			compexch(a[j - 1], a[j]);     
+	*/
+
+	// better, and nearly two times faster, adaptive insertion sort
+
+	for (i = l + 1; i < r; ++i) compexch(a[l], a[i]);
+
+	for (i = l + 2; i < r; ++i) // i=l+2 since a[l] is sentinel
+	{
+		j = i;
+		Item current = a[i];
+
+		while (less(current, a[j]))
+		{
+			a[j] = a[j - 1]; // instead of exchanging, we simply shift the larger element rightwards
+			--j;
+		}
+		a[i] = current;
+	}
 
 }
 
@@ -107,7 +134,7 @@ int main(int argc, char* argv[])
 
 	printf("\n\n\n");
 
-	sort(a, N);
+	sort(a, 0, N);
 
 	for (i = 0; i < N; ++i)
 		printf("%d\n", a[i]);
