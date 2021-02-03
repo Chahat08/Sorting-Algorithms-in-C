@@ -84,7 +84,7 @@ void selection_sort(Item a[], int l, int r)
 }
 
 
-void sort(Item a[], int l, int r)
+void insertion_sort(Item a[], int l, int r)
 {
 	// insertion sort algo comes here
 
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
 
 	printf("\n\n\n");
 
-	sort(a, 0, N);
+	insertion_sort(a, 0, N);
 
 	for (i = 0; i < N; ++i)
 		printf("%d\n", a[i]);
