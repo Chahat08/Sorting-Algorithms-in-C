@@ -9,9 +9,9 @@ typedef int Item;
 // using macros instead of functions so that these can be reused for different data types
 
 
-void bubble_sort(Item a[], int N)
+void bubble_sort(Item a[], int l, int r)
 {
-	// TO-DO: pass l, r instead of N
+	// TO-DO: OPTIMISE LIKE ADAPTIVE INSERTION SORT!!!
 
 	// a simple bubble sort implementation
 	// kinda optimised
@@ -19,13 +19,13 @@ void bubble_sort(Item a[], int N)
 	int i, j;
 	bool flag = false;
 
-	for (i = 0; i < N - 1; ++i)
+	for (i = l; i < r - 1; ++i)
 	{
 		flag = false;
 
 		if (!flag) 
 		{
-			for (j = 0; j < N - i - 1; ++j)
+			for (j = l; j < r - i - 1; ++j)
 				if (a[j] > a[j + 1])
 				{
 					flag = true;
